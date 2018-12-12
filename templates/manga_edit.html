@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<title> Mangás | Editar {{ .Manga.Descricao }} </title>
+
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="/assets/css/index.css" />
+  <link rel="stylesheet" type="text/css" href="/assets/css/style.css" />
+
+</head>
+<body>
+
+    <header>
+      <!-- Fixed navbar -->
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-info">
+        <a class="navbar-brand" href="#"> Mangás </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+          </ul>
+          <form class="form-inline mt-2 mt-md-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+    </header>
+
+    <br><br><br>
+    <div class="row">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+
+          <!-- Default form contact -->
+          {{ if .DisplayForm }}
+          <form method="POST" id="form-manga-edit" class="text-center border border-light p-5 f-1">
+
+              <p class="h4 mb-4">Editar Mangá</p>
+
+              {{ if .AlertMessage }}
+              <div class="form-group">
+                  <p class="alert alert-warning"> {{ .AlertMessage }} </p>
+              </div>
+              {{ end }}
+
+              <div class="form-group" id="validate-message">
+                  
+              </div>
+
+              <input type="hidden" name="id" id="id" value="{{ .Manga.Id }}" />
+
+              <!-- Descrição -->
+              <input type="text" id="descricao" name="descricao" class="form-control mb-4" placeholder="Descrição"  value="{{ .Manga.Descricao }}" />
+
+              <!-- Formato -->
+              <label>Formato</label>
+              <select class="browser-default custom-select mb-4" name="formato">
+                  <option value="" disabled>Choose option</option>
+                  {{ .Formatos }}
+              </select>
+
+              <!-- Quantidade -->
+              <input type="number" id="quantidade" name="quantidade" min="0" max="1000" class="form-control mb-4" placeholder="Quantidade"  value="{{ .Manga.Quantidade }}" />
+
+              <!-- Volumes -->
+              <div class="form-group">
+                  <textarea class="form-control rounded-0" id="volumes" name="volumes" rows="3" placeholder="Volumes (0 ao 10)" > {{ .Manga.Volumes }} </textarea>
+              </div>
+
+              <div class="form-group text-left">
+                <!-- Status -->
+                {{ if (eq .Manga.Status "1") }}
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="completo" name="status" value="1" 
+                    checked />
+                    <label class="custom-control-label cursor" for="completo">Completo</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="incompleto" name="status" value="0"/>
+                    <label class="custom-control-label" for="incompleto">Incompleto</label>
+                </div>
+                {{ else }}
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="completo" name="status" value="1"/>
+                    <label class="custom-control-label cursor" for="completo">Completo</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="incompleto" name="status" value="0" checked />
+                    <label class="custom-control-label" for="incompleto">Incompleto</label>
+                </div>
+                {{ end }}
+              </div>
+
+              <!-- Valor -->
+              <div class="form-group">
+                  <small id="price"></small>  
+                  <input type="text" id="valor" name="valor" class="form-control mb-4" placeholder="R$ " 
+                    value="{{ .Manga.Valor }}"/>
+                  
+              </div>
+              <!-- Send button -->
+              <button class="btn btn-info btn-sm btn-block" id="btn-submit" type="button">Atualizar</button>
+              <button class="btn btn-dark btn-sm btn-block" id="btn-reset" type="reset">Clear</button>
+          </form>
+          <!-- Default form contact -->
+          {{ else }}
+            <p class="alert alert-info"> Nenhuma informação foi encontrada. </p>
+            <a href="/" class="btn btn-link"> voltar </a>
+          {{ end }}
+        </div>
+        <div class="col-lg-4"></div>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <p class="text-muted text-center">Todos os direitos reservados | 2018</p>   
+            </div>
+        </div>
+
+      </div>
+    </footer>
+
+
+	<script type="text/javascript" src="/assets/js/jquery.js"></script>
+  <script type="text/javascript" src="/assets/js/jquery.mask.js"></script>
+	<script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript" src="/assets/js/forms.js"></script>
+
+  <script type="text/javascript" src="/assets/js/manga_edit.js"></script>
+</body>
+</html>
